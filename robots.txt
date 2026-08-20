@@ -1,3 +1,4 @@
 User-agent: *
 Allow: /
-Sitemap: https://koike-fudosan-website.pages.dev/sitemap.xml
+
+Sitemap: https://koike-fudousan.com/sitemap.xml

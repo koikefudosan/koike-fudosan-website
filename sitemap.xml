@@ -1,2 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"><url><loc>https://koike-fudosan-website.pages.dev/</loc></url><url><loc>https://koike-fudosan-website.pages.dev/sale/</loc></url><url><loc>https://koike-fudosan-website.pages.dev/inheritance/</loc></url><url><loc>https://koike-fudosan-website.pages.dev/minpaku/</loc></url><url><loc>https://koike-fudosan-website.pages.dev/area/</loc></url><url><loc>https://koike-fudosan-website.pages.dev/company/</loc></url><url><loc>https://koike-fudosan-website.pages.dev/faq/</loc></url><url><loc>https://koike-fudosan-website.pages.dev/contact/</loc></url></urlset>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://koike-fudousan.com/</loc><lastmod>2026-08-20</lastmod></url>
+  <url><loc>https://koike-fudousan.com/sale/</loc><lastmod>2026-08-20</lastmod></url>
+  <url><loc>https://koike-fudousan.com/inheritance/</loc><lastmod>2026-08-20</lastmod></url>
+  <url><loc>https://koike-fudousan.com/minpaku/</loc><lastmod>2026-08-20</lastmod></url>
+  <url><loc>https://koike-fudousan.com/area/</loc><lastmod>2026-08-20</lastmod></url>
+  <url><loc>https://koike-fudousan.com/cases/</loc><lastmod>2026-08-20</lastmod></url>
+  <url><loc>https://koike-fudousan.com/company/</loc><lastmod>2026-08-20</lastmod></url>
+  <url><loc>https://koike-fudousan.com/faq/</loc><lastmod>2026-08-20</lastmod></url>
+  <url><loc>https://koike-fudousan.com/contact/</loc><lastmod>2026-08-20</lastmod></url>
+  <url><loc>https://koike-fudousan.com/privacy/</loc><lastmod>2026-08-20</lastmod></url>
+</urlset>
