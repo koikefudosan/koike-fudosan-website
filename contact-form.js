@@ -112,31 +112,25 @@
     return data;
   };
 
-  const waitForTurnstile = () => new Promise((resolve, reject) => {
+  const loadTurnstileScript = () => new Promise((resolve, reject) => {
     if (window.turnstile) {
       resolve();
       return;
     }
 
-    let script = document.querySelector('script[src*="challenges.cloudflare.com/turnstile"]');
-    if (!script) {
-      script = document.createElement('script');
-      script.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit';
-      script.async = true;
-      script.defer = true;
-      document.head.appendChild(script);
-    }
+    const existing = document.querySelector('script[src*="challenges.cloudflare.com/turnstile"]');
+    if (existing) existing.remove();
 
-    const startedAt = Date.now();
-    const timer = window.setInterval(() => {
-      if (window.turnstile) {
-        window.clearInterval(timer);
-        resolve();
-      } else if (Date.now() - startedAt > 10000) {
-        window.clearInterval(timer);
-        reject(new Error('turnstile-timeout'));
-      }
-    }, 100);
+    const script = document.createElement('script');
+    script.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit';
+    script.async = true;
+    script.defer = true;
+    script.onload = () => {
+      if (window.turnstile) resolve();
+      else reject(new Error('turnstile-api'));
+    };
+    script.onerror = () => reject(new Error('turnstile-script'));
+    document.head.appendChild(script);
   });
 
   const refreshTurnstile = () => {
@@ -162,7 +156,7 @@
       const config = await response.json();
       if (!response.ok || !config.siteKey) throw new Error('config');
 
-      await waitForTurnstile();
+      await loadTurnstileScript();
       ts.textContent = '';
       widgetId = window.turnstile.render(ts, {
         sitekey: config.siteKey,
