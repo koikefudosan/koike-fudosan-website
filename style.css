@@ -34,3 +34,25 @@
 @media(max-width:1050px){.home-problem-grid{grid-template-columns:repeat(3,1fr)}.home-service-card{grid-template-columns:1fr}.home-service-card>img{height:240px;min-height:0}.home-service-card h3{min-height:0}}
 @media(max-width:820px){.home-hero-grid{grid-template-columns:1fr}.home-hero-visual img{height:auto;aspect-ratio:16/10}.home-flow-grid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:600px){.home-hero{padding:42px 0}.home-hero-copy h1{font-size:clamp(34px,11vw,48px)}.home-problem-grid,.home-service-grid,.home-flow-grid,.home-voice-grid{grid-template-columns:1fr}.home-problem-card h3{font-size:16px}.home-service-card>img{height:auto;aspect-ratio:3/2}.home-flow-card h3{min-height:0}.home-cta-link span{position:static;margin:14px;display:flex;justify-content:center}.home-green-banner img,.home-cta-link img{border-radius:14px}}
+
+/* Homepage repair */
+.home-hero-grid{grid-template-columns:1fr 1fr}
+.home-hero-visual img{height:auto;aspect-ratio:4/3;object-fit:cover;object-position:center}
+.home-service-grid{grid-template-columns:repeat(4,minmax(0,1fr));align-items:stretch}
+.home-service-card{display:flex;flex-direction:column;min-height:0}
+.home-service-card>img{width:100%;height:auto;min-height:0;aspect-ratio:3/2;object-fit:cover;background:#fff}
+.home-service-card>img[alt*="日本地図"]{object-fit:contain}
+.home-service-card>div{flex:1;padding:22px}
+.home-service-card h3{min-height:2.7em;font-size:22px}
+.home-green-banner .container{width:min(920px,92%)}
+.home-green-banner img{width:100%;height:auto;max-height:none;object-fit:contain}
+.home-flow-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+.home-flow-card{border:0;background:transparent;box-shadow:none}
+.home-flow-card>span,.home-flow-card>h3{display:none}
+.home-flow-card img{width:100%;height:auto;aspect-ratio:3/2;object-fit:contain;border:1px solid var(--line);border-radius:18px;box-shadow:0 8px 24px rgba(6,47,99,.08);background:#fff}
+.home-cta .container{width:min(900px,92%)}
+.home-cta-link img{width:100%;height:auto;max-height:none;object-fit:contain}
+.home-cta-link span{right:22px;bottom:18px}
+@media(max-width:1050px){.home-service-grid{grid-template-columns:repeat(2,1fr)}.home-service-card>img{height:auto;min-height:0}.home-service-card h3{min-height:0}}
+@media(max-width:820px){.home-hero-grid{grid-template-columns:1fr}.home-hero-visual img{aspect-ratio:16/10}.home-flow-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:600px){.home-service-grid,.home-flow-grid{grid-template-columns:1fr}.home-service-card>img,.home-flow-card img{aspect-ratio:3/2}.home-green-banner .container,.home-cta .container{width:94%}}
