@@ -135,7 +135,6 @@
 
   const refreshTurnstile = () => {
     token = '';
-    submit.disabled = true;
     window.clearTimeout(refreshTimer);
     refreshTimer = window.setTimeout(() => {
       if (window.turnstile && widgetId !== null) window.turnstile.reset(widgetId);
@@ -145,7 +144,6 @@
 
   const loadTurnstile = async () => {
     loadAttempts += 1;
-    submit.disabled = true;
     ts.textContent = 'セキュリティ確認を読み込んでいます。';
 
     try {
@@ -170,8 +168,7 @@
         'timeout-callback': refreshTurnstile,
         'error-callback': () => {
           token = '';
-          submit.disabled = true;
-          setStatus('セキュリティ確認を更新しています。しばらくお待ちください。', '', false);
+                setStatus('セキュリティ確認を更新しています。しばらくお待ちください。', '', false);
           refreshTurnstile();
         }
       });
@@ -181,8 +178,7 @@
         window.setTimeout(loadTurnstile, 1500 * loadAttempts);
       } else {
         ts.textContent = 'セキュリティ確認を読み込めませんでした。ページを再読み込みするか、電話またはメールでお問い合わせください。';
-        submit.disabled = true;
-      }
+          }
     }
   };
 
@@ -204,7 +200,6 @@
     }
 
     submitting = true;
-    submit.disabled = true;
     submit.textContent = '送信中…';
     setStatus('送信しています。');
 
@@ -237,7 +232,7 @@
     } finally {
       submitting = false;
       submit.textContent = '送信する';
-      submit.disabled = !token;
+      submit.disabled = false;
     }
   });
 
