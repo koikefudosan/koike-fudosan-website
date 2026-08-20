@@ -200,6 +200,7 @@
     }
 
     submitting = true;
+    submit.disabled = true;
     submit.textContent = '送信中…';
     setStatus('送信しています。');
 
