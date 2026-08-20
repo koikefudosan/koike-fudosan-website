@@ -44,3 +44,19 @@ Cloudflare Pages Functionsやフォームサービスを利用し、APIキーは
 
 ## 注意事項
 会社情報、サービス条件、実績、営業時間、定休日、料金、外部サービスIDは推測で追加しません。秘密情報をリポジトリへコミットしないでください。
+
+## 問い合わせフォーム実装
+- エンドポイント: `/api/contact`（Cloudflare Pages Functions）
+- Turnstile設定取得: `/api/contact-config`
+- メールAPI: Resend HTTPS API
+- フロントエンド: `contact-form.js`
+
+### Production / Previewに必要な環境変数
+- `CONTACT_TO_EMAIL`（正式値: info@koike-fudousan.com）
+- `CONTACT_REPLY_TO_EMAIL`（正式値: info@koike-fudousan.com）
+- `CONTACT_FROM_EMAIL`（Resendで認証済みの送信元）
+- `MAIL_API_KEY`（Secret）
+- `TURNSTILE_SITE_KEY`
+- `TURNSTILE_SECRET_KEY`（Secret）
+
+任意でKV Namespaceを`CONTACT_RATE_LIMIT`としてバインドすると、IP単位の短時間連続送信制限が有効になります。秘密値をリポジトリへ保存しないでください。
