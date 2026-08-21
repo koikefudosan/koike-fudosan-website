@@ -15,6 +15,7 @@
   let widgetId = null;
   let loadAttempts = 0;
   let refreshTimer = null;
+  let pendingSubmission = false;
 
   const allowedCategories = ['', '不動産売却', '不動産買取', '相続不動産', '空き家・古家', '遠方の不動産', '民泊・賃貸活用', '民泊運営・管理', 'その他'];
   const allowedMethods = ['メール', '電話', 'どちらでもよい'];
@@ -97,8 +98,6 @@
       issues.push(message);
     }
 
-    if (!token) issues.push('セキュリティ確認を完了してください。');
-
     if (issues.length) {
       summary.hidden = false;
       summary.innerHTML = '<strong>入力内容を確認してください。</strong><ul>' +
@@ -159,13 +158,31 @@
       widgetId = window.turnstile.render(ts, {
         sitekey: config.siteKey,
         action: 'contact',
+        execution: 'execute',
+        appearance: 'always',
+        size: 'flexible',
+        theme: 'auto',
+        retry: 'auto',
+        'retry-interval': 3000,
+        'refresh-expired': 'auto',
+        'refresh-timeout': 'auto',
         callback: value => {
           token = value;
           submit.disabled = false;
           setStatus('', '', false);
+          if (pendingSubmission) {
+            pendingSubmission = false;
+            form.requestSubmit();
+          }
         },
-        'expired-callback': refreshTurnstile,
-        'timeout-callback': refreshTurnstile,
+        'expired-callback': () => {
+          token = '';
+          if (pendingSubmission) setStatus('セキュリティ確認を更新しています。しばらくお待ちください。', '', false);
+        },
+        'timeout-callback': () => {
+          token = '';
+          if (pendingSubmission) setStatus('セキュリティ確認を更新しています。しばらくお待ちください。', '', false);
+        },
         'error-callback': () => {
           token = '';
                 setStatus('セキュリティ確認を更新しています。しばらくお待ちください。', '', false);
@@ -194,8 +211,13 @@
     if (submitting) return;
 
     const data = validate();
-    if (!data) {
-      if (!token) refreshTurnstile();
+    if (!data) return;
+
+    if (!token) {
+      pendingSubmission = true;
+      setStatus('セキュリティ確認を行っています。確認が完了すると自動的に送信します。', '', false);
+      if (window.turnstile && widgetId !== null) window.turnstile.execute(widgetId);
+      else loadTurnstile();
       return;
     }
 
