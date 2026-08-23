@@ -12,6 +12,7 @@
   let token = '';
   let started = false;
   let submitting = false;
+  let completed = false;
   let widgetId = null;
   let loadAttempts = 0;
 
@@ -165,7 +166,7 @@
           token = value;
           submit.disabled = false;
           submit.textContent = '送信する';
-          setStatus('', '', false);
+          if (!completed) setStatus('', '', false);
         },
 
         'expired-callback'() {
@@ -249,6 +250,7 @@
     }
 
     submitting = true;
+    completed = false;
     submit.disabled = true;
     submit.textContent = '送信中…';
     setStatus('送信しています。');
@@ -293,6 +295,7 @@
 
       form.reset();
       token = '';
+      completed = true;
       emit('generate_lead', { form_name: 'contact' });
       setStatus('お問い合わせを受け付けました。ご入力いただいたメールアドレスへ受付確認メールを送信しました。届かない場合は迷惑メールフォルダもご確認ください。', 'success');
       submit.disabled = true;
