@@ -269,7 +269,27 @@
         body: JSON.stringify(payload)
       });
       const result = await response.json().catch(() => ({}));
-      if (!response.ok || !result.success) throw new Error('send');
+
+      if (!response.ok || !result.success) {
+        const code = result.code || 'unknown';
+
+        console.warn('Contact API failed', {
+          status: response.status,
+          code
+        });
+
+        const messages = {
+          turnstile_failed: 'セキュリティ確認に失敗しました。ページを再読み込みして再度お試しください。',
+          mail_failed: '現在メールを送信できません。電話またはメールでお問い合わせください。',
+          rate_limited: '短時間に複数回送信されています。時間をおいて再度お試しください。'
+        };
+
+        const exception = new Error('contact_api_failed');
+        exception.userMessage =
+          messages[code] ||
+          '送信できませんでした。時間をおいて再度お試しください。';
+        throw exception;
+      }
 
       form.reset();
       token = '';
@@ -282,7 +302,11 @@
       token = '';
       submit.disabled = true;
       submit.textContent = 'セキュリティ確認中…';
-      setStatus('送信できませんでした。時間をおいて再度お試しいただくか、電話（03-6823-4055）またはメール（info@koike-fudousan.com）でお問い合わせください。', 'error');
+      setStatus(
+        exception.userMessage ||
+          '送信できませんでした。時間をおいて再度お試しください。',
+        'error'
+      );
       if (window.turnstile && widgetId !== null) window.turnstile.reset(widgetId);
     } finally {
       submitting = false;
