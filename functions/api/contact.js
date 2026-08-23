@@ -35,7 +35,7 @@ async function sendEmail(env, payload, idempotencyKey, kind) {
   const response = await fetch('https://api.resend.com/emails', {
     method: 'POST',
     headers: {
-      Authorization: `Bearer ${env.MAIL_API_KEY}`,
+      Authorization: `Bearer ${env.MAIL_API_KEY || env.EMAIL_API_KEY}`,
       'Content-Type': 'application/json',
       'User-Agent': 'koike-fudousan-contact/1.0',
       'Idempotency-Key': idempotencyKey
@@ -88,7 +88,7 @@ async function handleContact(context) {
   }
 
   const configuration = {
-    hasMailApiKey: Boolean(context.env.MAIL_API_KEY),
+    hasMailApiKey: Boolean(context.env.MAIL_API_KEY || context.env.EMAIL_API_KEY),
     hasTurnstileSecret: Boolean(context.env.TURNSTILE_SECRET_KEY),
     hasFromEmail: Boolean(context.env.CONTACT_FROM_EMAIL),
     hasToEmail: Boolean(context.env.CONTACT_TO_EMAIL),
