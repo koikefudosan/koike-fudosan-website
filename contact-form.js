@@ -14,8 +14,9 @@
   let submitting = false;
   let widgetId = null;
   let loadAttempts = 0;
-  let refreshTimer = null;
-  let pendingSubmission = false;
+
+  submit.disabled = true;
+  submit.textContent = 'セキュリティ確認中…';
 
   const allowedCategories = ['', '不動産売却', '不動産買取', '相続不動産', '空き家・古家', '遠方の不動産', '民泊・賃貸活用', '民泊運営・管理', 'その他'];
   const allowedMethods = ['メール', '電話', 'どちらでもよい'];
@@ -132,17 +133,10 @@
     document.head.appendChild(script);
   });
 
-  const refreshTurnstile = () => {
-    token = '';
-    window.clearTimeout(refreshTimer);
-    refreshTimer = window.setTimeout(() => {
-      if (window.turnstile && widgetId !== null) window.turnstile.reset(widgetId);
-      else loadTurnstile();
-    }, 250);
-  };
-
   const loadTurnstile = async () => {
     loadAttempts += 1;
+    submit.disabled = true;
+    submit.textContent = 'セキュリティ確認中…';
     ts.textContent = 'セキュリティ確認を読み込んでいます。';
 
     try {
@@ -155,38 +149,65 @@
 
       await loadTurnstileScript();
       ts.textContent = '';
+
       widgetId = window.turnstile.render(ts, {
         sitekey: config.siteKey,
         action: 'contact',
-        execution: 'execute',
-        appearance: 'always',
-        size: 'flexible',
+        appearance: 'interaction-only',
         theme: 'auto',
+        size: 'flexible',
         retry: 'auto',
         'retry-interval': 3000,
         'refresh-expired': 'auto',
         'refresh-timeout': 'auto',
-        callback: value => {
+
+        callback(value) {
           token = value;
           submit.disabled = false;
+          submit.textContent = '送信する';
           setStatus('', '', false);
-          if (pendingSubmission) {
-            pendingSubmission = false;
-            form.requestSubmit();
+        },
+
+        'expired-callback'() {
+          token = '';
+          submit.disabled = true;
+          submit.textContent = 'セキュリティ確認中…';
+          setStatus(
+            'セキュリティ確認の有効期限が切れました。再確認しています。',
+            '',
+            false
+          );
+        },
+
+        'timeout-callback'() {
+          token = '';
+          submit.disabled = true;
+          submit.textContent = 'セキュリティ確認中…';
+          setStatus(
+            'セキュリティ確認が時間切れになりました。再確認しています。',
+            '',
+            false
+          );
+
+          if (window.turnstile && widgetId !== null) {
+            window.turnstile.reset(widgetId);
           }
         },
-        'expired-callback': () => {
+
+        'error-callback'(errorCode) {
           token = '';
-          if (pendingSubmission) setStatus('セキュリティ確認を更新しています。しばらくお待ちください。', '', false);
-        },
-        'timeout-callback': () => {
-          token = '';
-          if (pendingSubmission) setStatus('セキュリティ確認を更新しています。しばらくお待ちください。', '', false);
-        },
-        'error-callback': () => {
-          token = '';
-                setStatus('セキュリティ確認を更新しています。しばらくお待ちください。', '', false);
-          refreshTurnstile();
+          submit.disabled = true;
+          submit.textContent = 'セキュリティ確認中…';
+
+          console.warn('Turnstile error:', errorCode);
+
+          setStatus(
+            'セキュリティ確認を読み込めませんでした。ページを再読み込みしてください。',
+            'error',
+            false
+          );
+
+          return true;
         }
       });
     } catch (exception) {
@@ -194,8 +215,10 @@
         ts.textContent = 'セキュリティ確認を再読み込みしています。';
         window.setTimeout(loadTurnstile, 1500 * loadAttempts);
       } else {
-        ts.textContent = 'セキュリティ確認を読み込めませんでした。ページを再読み込みするか、電話またはメールでお問い合わせください。';
-          }
+        submit.disabled = true;
+        submit.textContent = 'セキュリティ確認中…';
+        ts.textContent = 'セキュリティ確認を読み込めませんでした。ページを再読み込みしてください。';
+      }
     }
   };
 
@@ -214,10 +237,14 @@
     if (!data) return;
 
     if (!token) {
-      pendingSubmission = true;
-      setStatus('セキュリティ確認を行っています。確認が完了すると自動的に送信します。', '', false);
-      if (window.turnstile && widgetId !== null) window.turnstile.execute(widgetId);
-      else loadTurnstile();
+      submit.disabled = true;
+      submit.textContent = 'セキュリティ確認中…';
+
+      setStatus(
+        'セキュリティ確認が完了していません。確認完了後に送信してください。',
+        'error'
+      );
+
       return;
     }
 
@@ -248,14 +275,17 @@
       token = '';
       emit('generate_lead', { form_name: 'contact' });
       setStatus('お問い合わせを受け付けました。ご入力いただいたメールアドレスへ受付確認メールを送信しました。届かない場合は迷惑メールフォルダもご確認ください。', 'success');
+      submit.disabled = true;
+      submit.textContent = 'セキュリティ確認中…';
       if (window.turnstile && widgetId !== null) window.turnstile.reset(widgetId);
     } catch (exception) {
+      token = '';
+      submit.disabled = true;
+      submit.textContent = 'セキュリティ確認中…';
       setStatus('送信できませんでした。時間をおいて再度お試しいただくか、電話（03-6823-4055）またはメール（info@koike-fudousan.com）でお問い合わせください。', 'error');
-      refreshTurnstile();
+      if (window.turnstile && widgetId !== null) window.turnstile.reset(widgetId);
     } finally {
       submitting = false;
-      submit.textContent = '送信する';
-      submit.disabled = false;
     }
   });
 
