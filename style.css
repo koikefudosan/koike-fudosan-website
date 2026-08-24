@@ -96,3 +96,5 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
   .home-contact-options{display:grid;grid-template-columns:1fr}.home-contact-options .btn{width:100%}
 }
 @media(prefers-reduced-motion:reduce){.line-button,.line-floating-button{transition:none}}
+
+@media(max-width:600px){.contact-page-grid>*,.contact-sidebar,.contact-sidebar>*,.contact-form{min-width:0}.contact-page-grid{overflow:hidden}}
