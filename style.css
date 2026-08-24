@@ -71,3 +71,28 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 
 /* Responsive Turnstile */
 .turnstile-container{width:100%;min-width:0;overflow:hidden}.turnstile-container>div,.turnstile-container iframe{max-width:100%!important}
+
+
+/* LINE official account contact */
+.line-button{background:#06c755;color:#fff;border:2px solid #06c755;box-shadow:0 7px 18px rgba(6,199,85,.24)}
+.line-button:hover{background:#05b74d;border-color:#05b74d;color:#fff;transform:translateY(-1px)}
+.line-button:active{background:#049f43;border-color:#049f43;transform:translateY(0)}
+.line-button:focus-visible,.line-floating-button:focus-visible{outline:3px solid #f1c40f;outline-offset:3px}
+.line-floating-button{position:fixed;z-index:45;right:max(18px,env(safe-area-inset-right));bottom:max(18px,calc(env(safe-area-inset-bottom) + 12px));display:flex;align-items:center;gap:10px;min-height:56px;max-width:min(330px,calc(100vw - 36px));padding:10px 18px;border-radius:999px;background:#06c755;color:#fff;text-decoration:none;font-weight:900;line-height:1.25;box-shadow:0 10px 28px rgba(0,70,32,.28);transition:background-color .2s ease,transform .2s ease,box-shadow .2s ease}
+.line-floating-button:hover{background:#05b74d;transform:translateY(-2px);box-shadow:0 13px 32px rgba(0,70,32,.32)}
+.line-floating-button:active{background:#049f43;transform:translateY(0)}
+.line-floating-icon{display:grid;place-items:center;flex:0 0 auto;min-width:42px;height:34px;padding:0 7px;border:2px solid #fff;border-radius:8px;font-size:12px;letter-spacing:.04em}
+.line-floating-copy{display:grid;gap:1px}.line-floating-copy small{font-size:11px;font-weight:700;opacity:.92}
+.line-contact-card{border-top:6px solid #06c755}.line-contact-card h2{margin-top:0;color:#075d2a}
+.line-qr-wrap{width:240px;max-width:100%;margin:20px auto;padding:10px;background:#fff;border:1px solid #d8e2dc}
+.line-qr-wrap img{width:220px;height:220px;max-width:100%;margin:auto;object-fit:contain}
+.line-qr-note,.line-response-note{font-size:14px;color:#4b5650}.line-contact-card .line-button{width:100%;min-height:48px;text-align:center}
+.home-contact-options{display:flex;justify-content:center;gap:14px;flex-wrap:wrap;margin-top:22px}
+@media(max-width:600px){
+  .line-floating-button{right:max(10px,env(safe-area-inset-right));bottom:max(10px,calc(env(safe-area-inset-bottom) + 8px));min-height:50px;max-width:calc(100vw - 20px);padding:8px 13px;gap:8px}
+  .line-floating-icon{min-width:38px;height:30px;font-size:11px}.line-floating-copy small{display:none}
+  .line-floating-copy strong{font-size:14px;white-space:nowrap}
+  .contact-page-grid .line-floating-button{bottom:max(10px,calc(env(safe-area-inset-bottom) + 8px))}
+  .home-contact-options{display:grid;grid-template-columns:1fr}.home-contact-options .btn{width:100%}
+}
+@media(prefers-reduced-motion:reduce){.line-button,.line-floating-button{transition:none}}
