@@ -447,6 +447,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 .content-card a{font-weight:800}
 .guide-placeholder{display:grid;place-items:center;min-height:220px;padding:26px;border:1px solid #b8d2bf;border-radius:20px;background:linear-gradient(145deg,#e6f3ea,#fff);text-align:center;color:var(--navy);font-weight:800}
 .guide-placeholder::before{content:'小池';display:grid;place-items:center;width:92px;height:92px;margin-bottom:12px;border-radius:50%;background:var(--navy);color:#fff;font-size:1.25rem;font-weight:900}
+.guide-character{display:block;width:100%;height:auto;max-height:430px;object-fit:cover;object-position:center top;border:1px solid #b8d2bf;border-radius:20px;background:#eef8f1}
 .article-toc{margin:24px 0 34px;padding:20px 24px;border:1px solid var(--line);border-radius:16px;background:#f7faf8}
 .article-toc strong{display:block;margin-bottom:8px;color:var(--navy)}
 .article-toc ol{margin:0;padding-left:1.35em}
@@ -472,6 +473,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 }
 
 @media(max-width:640px){.content-cards,.topic-grid,.home-media-grid,.profile-grid{grid-template-columns:1fr}
+.guide-character{max-height:360px}
 .speech,.speech.koike{grid-template-columns:48px minmax(0,1fr)}
 .speaker{width:48px;height:48px;font-size:10px}
 .speech.koike .speaker{grid-column:1}
