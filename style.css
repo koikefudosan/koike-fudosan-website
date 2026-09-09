@@ -167,7 +167,6 @@ a{color:inherit}
 
 .home-hero-copy h1{margin:.1em 0 .35em;color:var(--navy);font-size:clamp(40px,5.2vw,68px);line-height:1.2;letter-spacing:.02em;word-break:normal;overflow-wrap:normal;line-break:strict}
 .hero-title span{display:block}
-.hero-title span:first-child{white-space:nowrap}
 
 .home-hero-visual{margin:0;border-radius:24px;overflow:hidden;box-shadow:var(--shadow);background:#fff}
 
