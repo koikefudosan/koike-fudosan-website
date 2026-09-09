@@ -470,6 +470,11 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 .nav{gap:clamp(8px,1.3vw,22px)}
 .nav a{font-size:clamp(12px,1vw,15px)}
 
+@media(min-width:821px){
+.nav{min-width:0;flex-wrap:wrap;justify-content:flex-end;column-gap:12px;row-gap:0}
+.nav a{padding-top:12px;padding-bottom:12px}
+}
+
 @media(max-width:900px){.article-shell{grid-template-columns:1fr}
 .article-sidebar{position:static}
 .content-cards,.topic-grid{grid-template-columns:repeat(2,1fr)}
