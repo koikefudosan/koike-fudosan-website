@@ -1,7 +1,7 @@
 :root{--navy:#062f63;--navy2:#0a477e;--green:#11853b;--green2:#32a852;--pale:#eef8f1;--sky:#eaf5ff;--line:#d8e2ec;--text:#182433;--muted:#5c6b7a;--white:#fff;--shadow:0 12px 34px rgba(6,47,99,.11);--radius:20px;--max:1180px}
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{margin:0;color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,sans-serif;line-height:1.75;font-size:16px;background:#fff;overflow-wrap:break-word;word-break:normal}
+body{margin:0;color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,sans-serif;line-height:1.75;font-size:16px;background:#fff;overflow-wrap:normal;word-break:normal;line-break:strict;hyphens:none}
 img,svg{max-width:100%;height:auto;display:block}
 a{color:inherit}
 .container{width:min(var(--max),92%);margin:auto}
@@ -165,8 +165,8 @@ a{color:inherit}
 
 .home-hero-grid{display:grid;grid-template-columns:.92fr 1.08fr;gap:44px;align-items:center}
 
-.home-hero-copy h1{margin:.1em 0 .35em;color:var(--navy);font-size:clamp(40px,5.2vw,68px);line-height:1.2;letter-spacing:.02em;word-break:normal;overflow-wrap:normal;line-break:strict}
-.hero-title span{display:block}
+.home-hero-copy h1{margin:.1em 0 .35em;color:var(--navy);font-size:clamp(32px,4vw,48px);line-height:1.2;letter-spacing:.01em;word-break:normal;overflow-wrap:normal;line-break:strict}
+.hero-title span{display:block;white-space:nowrap}
 
 .home-hero-visual{margin:0;border-radius:24px;overflow:hidden;box-shadow:var(--shadow);background:#fff}
 
@@ -316,7 +316,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 
 
 .home-hero-grid>*{min-width:0}
-.home-hero-copy .lead{overflow-wrap:break-word;line-break:strict}
+.home-hero-copy .lead{max-width:34em;overflow-wrap:normal;line-break:strict}
 
 @media(max-width:600px){.home-hero-copy h1{font-size:clamp(34px,11vw,48px)}
 .actions{max-width:100%}
@@ -439,7 +439,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 .conversation-avatar{display:block;width:56px;height:56px;object-fit:cover;object-position:center 18%;border:2px solid #c8d5cd;border-radius:50%;background:#fff}
 .speaker-koike .conversation-avatar{border-color:var(--green);object-position:center 12%}
 .conversation-name{display:block;margin-top:5px;white-space:nowrap}
-.bubble{min-width:0;padding:16px 18px;border-radius:16px;background:#fff;border:1px solid var(--line);box-shadow:0 5px 16px rgba(6,47,99,.06);line-break:strict;word-break:normal;overflow-wrap:break-word}
+.bubble{min-width:0;padding:16px 18px;border-radius:16px;background:#fff;border:1px solid var(--line);box-shadow:0 5px 16px rgba(6,47,99,.06);line-break:strict;word-break:normal;overflow-wrap:normal}
 .koike .bubble{background:#edf8f0}
 .article-sidebar{position:sticky;top:100px;display:grid;gap:18px}
 .article-meta,.operator-card,.related-box{padding:20px;background:#fff;border:1px solid var(--line);border-radius:16px}
@@ -470,6 +470,14 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 .nav{gap:clamp(8px,1.3vw,22px)}
 .nav a{font-size:clamp(12px,1vw,15px)}
 
+/* Japanese typography and responsive readability */
+.ja-wrap{word-break:keep-all;overflow-wrap:break-word;line-break:strict}
+h1.ja-wrap,h2.ja-wrap,h3.ja-wrap,.section-title,.card h3,.content-card h3{text-wrap:balance}
+p.ja-wrap,li.ja-wrap,.bubble.ja-wrap,figcaption.ja-wrap{text-wrap:pretty}
+.btn,.nav a,.line-floating-copy strong{line-height:1.4}
+.btn{min-height:48px;text-wrap:balance}
+.article-body>p,.article-body>ul,.article-body>ol{max-width:46em}
+
 @media(min-width:821px){
 .nav{min-width:0;flex-wrap:wrap;justify-content:flex-end;column-gap:12px;row-gap:0}
 .nav a{padding-top:12px;padding-bottom:12px}
@@ -482,15 +490,32 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 
 @media(max-width:640px){.content-cards,.topic-grid,.home-media-grid,.profile-grid{grid-template-columns:1fr}
 .guide-character{max-height:360px}
-.speech{grid-template-columns:48px minmax(0,1fr);gap:10px}
-.speech.koike{grid-template-columns:minmax(0,1fr) 48px;gap:10px}
-.speaker{width:48px;font-size:10px}
-.conversation-avatar{width:46px;height:46px}
+.speech{grid-template-columns:46px minmax(0,1fr);gap:10px}
+.speech.koike{grid-template-columns:minmax(0,1fr) 46px;gap:10px}
+.speaker{width:46px;font-size:10px}
+.conversation-avatar{width:44px;height:44px}
 .speech.koike .speaker{grid-column:2}
 .speech.koike .bubble{grid-column:1}
+.bubble{max-width:100%;padding:14px 15px;font-size:15px;line-height:1.8}
 .comparison{display:block;overflow-x:auto}
 .article-body,.article-shell>*{min-width:0}
 .article-summary,.fiction-notice,.article-note{padding:16px}
+}
+
+@media(max-width:600px){
+.home-hero-copy h1{font-size:clamp(28px,7.7vw,34px)}
+.section-title{font-size:clamp(25px,7.2vw,28px);line-height:1.45}
+.page-hero h1,.info-hero h1,.subhero h1{font-size:clamp(30px,9vw,40px);line-height:1.35}
+h2{font-size:clamp(23px,6.8vw,30px);line-height:1.45}
+h3{line-height:1.5}
+.section{padding-top:clamp(40px,11vw,48px);padding-bottom:clamp(40px,11vw,48px)}
+.card,.content-card{padding:22px 20px}
+.actions{gap:10px}
+.actions .btn,.home-contact-options .btn{width:100%;padding-left:16px;padding-right:16px}
+.menu-btn{width:48px;height:48px;padding:4px;line-height:1;touch-action:manipulation}
+.nav{gap:0;padding:12px 20px 18px}
+.nav a{min-height:46px;padding:11px 4px}
+.breadcrumb,.crumb{font-size:13px;line-height:1.6}
 }
 
 
