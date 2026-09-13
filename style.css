@@ -471,7 +471,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 .nav a{font-size:clamp(12px,1vw,15px)}
 
 /* Japanese typography and responsive readability */
-.ja-wrap{word-break:keep-all;overflow-wrap:break-word;line-break:strict}
+.ja-wrap{word-break:keep-all;overflow-wrap:normal;line-break:strict}
 h1.ja-wrap,h2.ja-wrap,h3.ja-wrap,.section-title,.card h3,.content-card h3{text-wrap:balance}
 p.ja-wrap,li.ja-wrap,.bubble.ja-wrap,figcaption.ja-wrap{text-wrap:pretty}
 .btn,.nav a,.line-floating-copy strong{line-height:1.4}
